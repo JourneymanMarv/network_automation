@@ -1,0 +1,30 @@
+- name: Configure Cisco Switch
+  hosts: cisco_switches
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+   - name: Create VLAN 4
+     cisco.ios.ios_config:
+      lines:
+        - "vlan 4"
+        - "name Buisness"
+      match: none
+   - name: Set ip address on VLAN 4
+     cisco.ios.ios_config:
+      lines:
+        - "int vlan 4"
+        - "ip address 10.55.4.1 255.255.255.0"
+        - "exit"
+      match: none
+   - name: Create dhcp pool for VLAN 4  
+     cisco.ios.ios_config:
+      lines:
+        - "ip dhcp pool Vlan4"
+        - "network 10.55.4.0 255.255.255.0"
+        - "dns-server 8.8.8.8"
+        - "default-router 10.55.4.1"
+        - "domain-name BUSnetwork.local"
+      match: none
+   
+

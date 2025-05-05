@@ -1,0 +1,19 @@
+- name: Configure Cisco Switch 
+  hosts: cisco_switches
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+   - name: create vlan 4 on access switch 
+     cisco.ios.ios_config:
+      lines:
+       - "vlan 4"
+       - "name Buisness"
+      match: none
+   - name: Assign port gig 1/0/5 to vlan 4
+     cisco.ios.ios_config:
+      lines:
+       - "int gig 1/0/5"
+       - "switchport mode access"
+       - "switchport access vlan 4"
+      match: none

@@ -1,0 +1,6 @@
+- hosts: "*"
+  become: yes
+  tasks:
+  - name: run script in remote server
+    become: yes
+    script: /root/docker_install.sh
